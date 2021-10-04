@@ -6,19 +6,19 @@ from post_tweet import post_tweet
 
 load_dotenv()
 
-
 def read_email():
     FROM_EMAIL = getenv('FROM_EMAIL')
     FROM_PWD = getenv('FROM_PWD')
     SMTP_SERVER = "imap.gmail.com"
     SMTP_PORT = 993
+    posts = []
 
     try:
         print('Gmail Authenticating...')
         mail = IMAP4_SSL(SMTP_SERVER)
         mail.login(FROM_EMAIL, FROM_PWD)
         mail.select('inbox')
-        type, data = mail.search(None, '(FROM "Arnon")')
+        type, data = mail.search(None, '(FROM "Filipe")')
         for num in data[0].split():
             type, data = mail.fetch(num, '(RFC822)')
             raw_text = (data[0][1])
@@ -36,11 +36,9 @@ def read_email():
         mail.close()
         mail.logout()
 
-        # for post in posts:
-        #     print(post + '\n')
-        print('Done √')
+        print('Read Email Done √')
 
-        post_tweet()
+        post_tweet(posts)
 
     except Exception as e:
         print(str(e))

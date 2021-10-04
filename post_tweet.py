@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def post_tweet():
+def post_tweet(tweet_list):
     consumer_key = os.getenv('API_KEY')
     consumer_secret = os.getenv('API_KEY_SECRET')
     access_token = os.getenv('ACCESS_TOKEN')
@@ -22,32 +22,33 @@ def post_tweet():
     try:
         api.verify_credentials()
         print("Authentication Successful")
+
+        for tweet in tweet_list:
+            print("\n" + tweet + "\n")
+        
+        # tweet = """Intel apresenta nova geração de processador neuromórfico: a CPU “Loihi 2” apresenta mudanças fundamentais de hardware que permitirão a descoberta de padrões e associações de forma mais eficiente em dados. O processador suporta um máximo de 120 milhões de sinapses, uma quantidade pequena quando comparada com as mais de um trilhão no cérebro humano. A computação neuromórfica utiliza abordagens algorítmicas que emulam como o cérebro interage com o mundo para fornecer recursos mais próximos da cognição humana. As informações são do site The Register e Intel"""
+
+        # tweet_length = len(tweet)
+
+        # if tweet_length <= 280:
+        #     api.update_status(tweet)
+        # elif tweet_length >= 280:
+        #     quantity_of_tweets = tweet_length / 280
+        #     tweet_chunk_length = tweet_length / math.ceil(quantity_of_tweets)
+        #     tweet_chunks = textwrap.wrap(tweet,  math.ceil(
+        #         tweet_chunk_length), break_long_words=False)
+
+        #     # iterate over the chunks
+        #     original_tweet = []
+        #     for i, chunk in zip(range(len(tweet_chunks)), tweet_chunks):
+        #         original_tweet.extend([chunk])
+        #         if i == 0:
+        #             original_tweet[i] = api.update_status(chunk)
+        #         else:
+        #             print(original_tweet[i])
+        #             original_tweet[i] = api.update_status(chunk,
+        #                                                   in_reply_to_status_id=original_tweet[i-1].id,
+        #                                                   auto_populate_reply_metadata=True)
+        #         print(f'{i} -> {original_tweet[i]} <-> {chunk}/n/n')
     except:
-        print("Authentication Error")
-
-    tweet = """Novo malware é descoberto no Android: estima-se que o “GriftHorse” já
-            tenha infectado mais de 10 milhões de dispositivos globalmente e estava
-            presente em diversos aplicativos na Play Store (o Google já os removeu, mas
-            ainda podem estar circulando em outras lojas). O trojan engana os usuários
-            pedindo seus números de telefone para ganharem um prêmio, mas ao invés
-            disso, acaba confirmando um serviço de assinatura baseado em SMS. A lista
-            com mais de uma centena de apps maliciosos pode ser conferida no blog da 
-            empresa de segurança Zimperium e recomenda-se que sejam desinstalados imediatamente."""
-
-    tweet_length = len(tweet)
-
-    if tweet_length <= 280:
-        api.update_status(tweet)
-    elif tweet_length >= 280:
-        tweet_length_limit = tweet_length / 280
-        tweet_chunk_length = tweet_length / math.ceil(tweet_length_limit)
-        tweet_chunks = textwrap.wrap(tweet,  math.ceil(
-            tweet_chunk_length), break_long_words=False)
-
-        # iterate over the chunks
-        for x, chunk in zip(range(len(tweet_chunks)), tweet_chunks):
-            api.update_status(chunk)
-            if x == 0:
-                print(f'1 of {len(tweet_chunks)} {chunk}')
-            else:
-                print(f'{x+1} of {len(tweet_chunks)} {chunk}')
+        print("Authentication Error\nTry again later")
