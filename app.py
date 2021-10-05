@@ -1,8 +1,8 @@
-from read_email import read_email
+from read_email import mail_connect
 
 
 def main():
-    read_email()
+    mail_connect()
 
 
 if __name__ == '__main__':
