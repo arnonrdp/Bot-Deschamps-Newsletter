@@ -48,6 +48,8 @@ def post_tweet(tweet_list):
                                                               in_reply_to_status_id=original_tweet[i-1].id,
                                                               auto_populate_reply_metadata=True)
                     print(f'{i} -> {original_tweet[i]} <-> {chunk}/n/n')
-            sleep(60)
+            sleep(120) 
     except:
         print("Authentication Error\nTry again later")
+        sleep(120)
+        post_tweet(tweet_list)
