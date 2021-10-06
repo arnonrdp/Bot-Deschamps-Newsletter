@@ -1,0 +1,27 @@
+name: Python Script Workflow
+
+on:
+  # Triggers the workflow at every 10th minute past every hour from 11 through 13 on every day-of-week from Monday through Friday.
+  schedule:
+  - cron: "*/10 11-13 * * 1-5"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v2 # Checkout the repository content to github runner.
+
+      - name: Setup Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.6
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip read_email
+          python -m pip install --upgrade pip post_tweet
+
+      - name: Execute Python script # Run the app.py
+        run: python app.py
