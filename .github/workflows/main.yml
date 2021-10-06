@@ -19,9 +19,7 @@ jobs:
           python-version: 3.9.6
 
       - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip read_email
-          python -m pip install --upgrade pip post_tweet
+        run: python -m pip install --upgrade pip read_email
 
       - name: Execute Python script # Run the app.py
         run: python app.py
