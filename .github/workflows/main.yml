@@ -3,11 +3,16 @@ name: Python Script Workflow
 on:
   # Triggers the workflow at every 10th minute past every hour from 11 through 13 on every day-of-week from Monday through Friday.
   schedule:
-  - cron: "*/10 11-13 * * 1-5"
+    - cron: "*/10 11-13 * * 1-5"
+
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    environment:
+      name: production
 
     steps:
       - name: Checkout repository content
@@ -19,7 +24,18 @@ jobs:
           python-version: 3.9.6
 
       - name: Install Python dependencies
-        run: python -m pip install --upgrade pip read_email
+        uses: py-actions/py-dependency-install@v2
+        with:
+          path: "requirements.txt"
 
       - name: Execute Python script # Run the app.py
+        env:
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          FROM_PWD: ${{ secrets.FROM_PWD }}
+          API_KEY: ${{ secrets.API_KEY }}
+          API_KEY_SECRET: ${{ secrets.API_KEY_SECRET }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+
         run: python app.py
