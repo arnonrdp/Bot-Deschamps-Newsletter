@@ -3,7 +3,7 @@ name: Python Script Workflow
 on:
   # Triggers the workflow at every 10th minute past every hour from 11 through 13 on every day-of-week from Monday through Friday.
   schedule:
-    - cron: "*/10 11-13 * * 1-5"
+    - cron: "50 13 * * 1-5"
 
   workflow_dispatch:
 
