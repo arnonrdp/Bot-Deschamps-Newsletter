@@ -1,9 +1,8 @@
-name: Python Script Workflow
+name: Python Bot Workflow
 
 on:
-  # Triggers the workflow at every 10th minute past every hour from 11 through 13 on every day-of-week from Monday through Friday.
   schedule:
-    - cron: "50 13 * * 1-5"
+    - cron: "30 14 * * 1-5"
 
   workflow_dispatch:
 
@@ -16,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository content
-        uses: actions/checkout@v2 # Checkout the repository content to github runner.
+        uses: actions/checkout@v2
 
       - name: Setup Python Version
         uses: actions/setup-python@v2
@@ -28,7 +27,7 @@ jobs:
         with:
           path: "requirements.txt"
 
-      - name: Execute Python script # Run the app.py
+      - name: Execute Python script
         env:
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
           FROM_PWD: ${{ secrets.FROM_PWD }}
@@ -37,5 +36,4 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
           BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
-
         run: python app.py

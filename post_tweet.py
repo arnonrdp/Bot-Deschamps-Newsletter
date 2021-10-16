@@ -18,20 +18,24 @@ def twitter_connect(tweet_list):
     api = API(auth)
     try:
         api.verify_credentials()
+        print('Twitter: conexão bem-sucedida!')
         post_tweet(tweet_list, api)
     except:
         sleep(120)
+        print('Twitter: conexão mal-sucedida! Tentando novamente em 2 minutos.')
         twitter_connect(tweet_list)
 
 
 def post_tweet(tweet_list, api):
     for tweet in tweet_list:
-        print('\n' + tweet + '\n')
-        each_tweet = wrap(tweet, 280, break_long_words=False)
+        tweet_encode = tweet.encode("utf-8", "ignore")
+        tweet_decode = tweet_encode.decode()
+        print('\n' + tweet_decode + '\n')
+        each_tweet = wrap(tweet_decode, 280, break_long_words=False)
         original_tweet = []
         for i, chunk in zip(range(len(each_tweet)), each_tweet):
             original_tweet.extend([chunk])
-            print(original_tweet)
+            print([chunk])
             if i == 0:
                 original_tweet[i] = api.update_status(chunk)
             else:
@@ -40,3 +44,4 @@ def post_tweet(tweet_list, api):
                                                       auto_populate_reply_metadata=True)
             sleep(1)
         sleep(300)
+    print('FIM')

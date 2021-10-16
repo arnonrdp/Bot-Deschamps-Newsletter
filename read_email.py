@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 from imap_tools import MailBox, MailMessageFlags, A
 from os import getenv
 from post_tweet import twitter_connect
-from time import sleep
 
 
 def mail_connect():
@@ -14,6 +13,7 @@ def mail_connect():
     mailbox = MailBox(SMTP_SERVER).login(
         FROM_EMAIL, FROM_PWD, initial_folder='INBOX')
     read_email(mailbox)
+    print('Gmail: conexão bem-sucedida!')
 
 
 def read_email(mailbox):
@@ -27,8 +27,7 @@ def read_email(mailbox):
             archive_message(mailbox, msg.uid)
         twitter_connect(posts)
     else:
-        sleep(60)
-        mail_connect()
+        print('Nenhum e-mail encontrado.')
 
 
 def mark_as_read(mailbox):
@@ -36,8 +35,10 @@ def mark_as_read(mailbox):
     mailbox.flag(mailbox.fetch(A(seen=False)), flags, True)
     mailbox.flag(mailbox.fetch("SENTON 01-Jan-2021"),
                  MailMessageFlags.SEEN, False)
+    print('E-mail marcado como lido.')
 
 
 def archive_message(mailbox, msg_uid):
     move_to = 'Tweeted'
     mailbox.move(msg_uid, move_to)
+    print('E-mail arquivado.')
