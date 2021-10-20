@@ -12,8 +12,8 @@ def mail_connect():
 
     mailbox = MailBox(SMTP_SERVER).login(
         FROM_EMAIL, FROM_PWD, initial_folder='INBOX')
-    read_email(mailbox)
     print('Gmail: conexão bem-sucedida!')
+    read_email(mailbox)
 
 
 def read_email(mailbox):
