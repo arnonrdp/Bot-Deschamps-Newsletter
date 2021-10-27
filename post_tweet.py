@@ -20,9 +20,9 @@ def twitter_connect(tweet_list):
         api.verify_credentials()
         print('Twitter: conexão bem-sucedida!')
         post_tweet(tweet_list, api)
-    except:
+    except BaseException as e:
+        print('Twitter: conexão mal-sucedida! Tentando novamente em 2 minutos.\n' + e)
         sleep(120)
-        print('Twitter: conexão mal-sucedida! Tentando novamente em 2 minutos.')
         twitter_connect(tweet_list)
 
 
