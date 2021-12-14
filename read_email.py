@@ -18,16 +18,19 @@ def read_email(mailbox):
         posts = posts[2:-3]
         mark_as_read(mailbox)
         archive_message(mailbox, msg.uid)
-    post_tweet(posts)
+        twitter_connect(posts)
+    else:
+        print('Nenhum e-mail encontrado.')
 
 
 def mark_as_read(mailbox):
     flags = (MailMessageFlags.ANSWERED, MailMessageFlags.FLAGGED)
     mailbox.flag(mailbox.fetch(A(seen=False)), flags, True)
-    mailbox.flag(mailbox.fetch("SENTON 01-Jan-2021"),
-                 MailMessageFlags.SEEN, False)
+    mailbox.flag(mailbox.fetch("SENTON 01-Jan-2021"), MailMessageFlags.SEEN, False)
+    print('E-mail marcado como lido.')
 
 
 def archive_message(mailbox, msg_uid):
     move_to = 'Tweeted'
     mailbox.move(msg_uid, move_to)
+    print('E-mail arquivado.')
