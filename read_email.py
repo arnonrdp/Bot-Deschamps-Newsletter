@@ -4,14 +4,10 @@ from post_tweet import twitter_connect
 
 
 def mail_connect():
-    load_dotenv()
-    FROM_EMAIL = getenv('FROM_EMAIL')
-    FROM_PWD = getenv('FROM_PWD')
-    SMTP_SERVER = "imap.gmail.com"
-
-    mailbox = MailBox(SMTP_SERVER).login(
-        FROM_EMAIL, FROM_PWD, initial_folder='INBOX')
-
+    mailbox = MailBox('imap.gmail.com').login(getenv('MAIL'),
+                                              getenv('PASS'),
+                                              initial_folder='INBOX')
+    print('Gmail: conexão bem-sucedida!')
     read_email(mailbox)
 
 
