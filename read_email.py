@@ -1,7 +1,6 @@
-from imap_tools import MailBox, MailMessageFlags, A
 from os import getenv
-from dotenv import load_dotenv
-from post_tweet import post_tweet
+from imap_tools import MailBox, MailMessageFlags, A
+from post_tweet import twitter_connect
 
 
 def mail_connect():
