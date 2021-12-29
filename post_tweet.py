@@ -14,7 +14,9 @@ def prepare_tweet(tweet_list, api):
     print('Twitter: conexão bem-sucedida!')
     prepare_tweet(tweet_list, api)
     for tweet in tweet_list:
-        each_tweet = wrap(tweet, 280, break_long_words=False)
+        tweet_encoded = tweet.encode("utf-8", "ignore")
+        tweet_decoded = tweet_encoded.decode()
+        each_tweet = wrap(tweet_decoded, 280, break_long_words=False)
         post_tweet(api, each_tweet)
     print('FIM')
 
