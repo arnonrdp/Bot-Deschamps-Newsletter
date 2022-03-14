@@ -12,17 +12,18 @@ def mail_connect():
 
 
 def read_email(mailbox):
-    posts = []
     mail_list = [i.uid for i in mailbox.fetch()]
-    if mail_list:
-        for msg in mailbox.fetch(A(from_='newsletter@filipedeschamps.com.br')):
-            posts = msg.text.replace('*', '').split('\r\n\r\n')
-            posts = posts[2:-3]
-            mark_as_read(mailbox)
-            archive_message(mailbox, msg.uid)
-        twitter_connect(posts)
-    else:
-        print('Nenhum e-mail encontrado.')
+    prepare_mail(mailbox) if mail_list else print('Nenhum e-mail encontrado.')
+
+
+def prepare_mail(mailbox):
+    posts = []
+    for msg in mailbox.fetch(A(from_='newsletter@filipedeschamps.com.br')):
+        posts = msg.text.replace('*', '').split('\r\n\r\n')
+        posts = posts[2:-3]
+        mark_as_read(mailbox)
+        archive_message(mailbox, msg.uid)
+    twitter_connect(posts)
 
 
 def mark_as_read(mailbox):
