@@ -30,8 +30,8 @@ jobs:
 
       - name: Execute Python script # Run the app.py
         env:
-          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
-          FROM_PWD: ${{ secrets.FROM_PWD }}
+          MAIL: ${{ secrets.MAIL }}
+          PASS: ${{ secrets.PASS }}
           API_KEY: ${{ secrets.API_KEY }}
           API_KEY_SECRET: ${{ secrets.API_KEY_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
