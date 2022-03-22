@@ -1,4 +1,5 @@
-from os import getenv
+from os import getenv, system
+from time import sleep
 from imap_tools import MailBox, MailMessageFlags, A
 from post_tweet import twitter_connect
 
@@ -7,13 +8,13 @@ def mail_connect():
     mailbox = MailBox('imap.gmail.com').login(getenv('MAIL'),
                                               getenv('PASS'),
                                               initial_folder='INBOX')
-    print('Gmail: conexão bem-sucedida!')
+    print('\nGmail: conexão bem-sucedida!')
     read_email(mailbox)
 
 
 def read_email(mailbox):
     mail_list = [i.uid for i in mailbox.fetch()]
-    prepare_mail(mailbox) if mail_list else print('Nenhum e-mail encontrado.')
+    prepare_mail(mailbox) if mail_list else countdown(900)
 
 
 def prepare_mail(mailbox):
@@ -37,3 +38,14 @@ def archive_message(mailbox, msg_uid):
     move_to = 'Tweeted'
     mailbox.move(msg_uid, move_to)
     print('E-mail arquivado.')
+
+
+def countdown(t):
+    print('Nenhum e-mail encontrado. Tentando novamente em 15 minutos.')
+    while t:
+        minutes, seconds = divmod(t, 60)
+        time_format = '{:02d}:{:02d}'.format(minutes, seconds)
+        print('\r', time_format, end='')
+        sleep(1)
+        t -= 1
+    mail_connect()

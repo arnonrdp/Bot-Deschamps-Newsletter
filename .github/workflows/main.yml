@@ -1,9 +1,9 @@
 name: Python Script Workflow
 
 on:
-  # Triggers the workflow at every 15th minute past every hour from 14 through 16 on every day-of-week from Monday through Friday.
+  # Triggers the workflow at 14:00 GMT on every day-of-week from Monday through Friday.
   schedule:
-    - cron: "*/15 14-16 * * 1-5"
+    - cron: "0 14 * * 1-5"
 
   workflow_dispatch:
 
@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout repository content
-        uses: actions/checkout@v3 # Checkout the repository content to github runner.
+        uses: actions/checkout@v3 # Checkout the repository content to GitHub runner.
 
       - name: Setup Python Version
         uses: actions/setup-python@v3
