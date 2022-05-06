@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
 
 [![Python Script Workflow](https://github.com/arnonrdp/Bot-Deschamps-Newsletter/actions/workflows/main.yml/badge.svg)](https://github.com/arnonrdp/Bot-Deschamps-Newsletter/actions/workflows/main.yml)
 ![Code Size](https://img.shields.io/github/languages/code-size/arnonrdp/Bot-Deschamps-Newsletter)
