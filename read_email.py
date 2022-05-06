@@ -1,6 +1,5 @@
 import logging
-from os import getenv, system
-from syslog import LOG_DEBUG
+from os import getenv
 from time import sleep
 from imap_tools import MailBox, MailMessageFlags, A
 from post_tweet import twitter_connect
@@ -11,9 +10,12 @@ def mail_connect():
                                               getenv('PASS'),
                                               initial_folder='INBOX')
     print('\nPrint – Gmail: conexão bem-sucedida!')
-    # debug into github actions a message
-    system('echo "system – Gmail: conexão bem-sucedida!" >> /home/runner/work/debug.txt')
-    logging.info('logging.info – Gmail: conexão bem-sucedida!')
+    logging.debug("Hello World")
+    logger1 = logging.getLogger("module_1")
+    logger2 = logging.getLogger("module_2")
+
+    logger1.debug("Module 1 debugger")
+    logger2.debug("Module 2 debugger")
     read_email(mailbox)
 
 
