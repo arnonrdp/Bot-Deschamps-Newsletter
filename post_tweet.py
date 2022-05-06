@@ -45,4 +45,4 @@ def post_tweet(api, each_tweet):
         except Exception as e:
             print('Erro: ', e)
             break
-    sleep(300)
+    sleep(600)
