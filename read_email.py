@@ -13,7 +13,6 @@ def mail_connect():
     print('\nPrint – Gmail: conexão bem-sucedida!')
     # debug into github actions a message
     system('echo "system – Gmail: conexão bem-sucedida!" >> /home/runner/work/debug.txt')
-    LOG_DEBUG('LOG_DEBUG – Gmail: conexão bem-sucedida!')
     logging.info('logging.info – Gmail: conexão bem-sucedida!')
     read_email(mailbox)
 
