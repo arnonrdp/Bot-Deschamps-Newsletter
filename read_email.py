@@ -7,8 +7,8 @@ attempts = 0
 
 
 def mail_connect():
-    mailbox = MailBox('imap.gmail.com').login(getenv('MAIL'), getenv('PASS'), initial_folder='INBOX')
-    print('\nGmail: conexão bem-sucedida!')
+    mailbox = MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS'), initial_folder='INBOX')
+    print('\nIMAP: conexão bem-sucedida!')
     read_email(mailbox)
 
 
