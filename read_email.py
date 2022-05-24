@@ -11,9 +11,9 @@ def check_mail():
         if not mailbox.uids():
             trials()
         for msg in mailbox.fetch(AND(from_='newsletter@filipedeschamps.com.br')):
-            prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
             mark_as_read(mailbox, msg.uid)
             archive_message(mailbox, msg.uid)
+            prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
 
 
 def prepare_mail(msg):
