@@ -1,29 +1,24 @@
 from os import getenv
 from time import sleep
-from imap_tools import A, MailBox, MailMessageFlags
+from imap_tools import AND, MailBox, MailMessageFlags
 from post_tweet import twitter_connect
 
 attempts = 0
 
 
-def mail_connect():
-    mailbox = MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS'), initial_folder='INBOX')
-    print('\nIMAP: conexão bem-sucedida!')
-    read_email(mailbox)
+def check_mail():
+    with MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS')) as mailbox:
+        if not mailbox.uids():
+            trials()
+        for msg in mailbox.fetch(AND(from_='newsletter@filipedeschamps.com.br')):
+            prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
+            mark_as_read(mailbox, msg.uid)
+            archive_message(mailbox, msg.uid)
 
 
-def read_email(mailbox):
-    mail_list = [i.uid for i in mailbox.fetch()]
-    prepare_mail(mailbox) if mail_list else trials()
-
-
-def prepare_mail(mailbox):
-    posts = []
-    for msg in mailbox.fetch(A(from_='newsletter@filipedeschamps.com.br')):
-        posts = msg.text.replace('*', '').split('\r\n\r\n')
-        posts = posts[2:-3]
-        mark_as_read(mailbox, msg.uid)
-        archive_message(mailbox, msg.uid)
+def prepare_mail(msg):
+    posts = msg.text.replace('*', '').split('\r\n\r\n')
+    posts = posts[2:-3]
     twitter_connect(posts)
 
 
@@ -46,4 +41,4 @@ def trials():
         return
     print('Tentando novamente em 15 minutos...')
     sleep(900)
-    mail_connect()
+    check_mail()

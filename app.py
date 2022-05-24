@@ -1,10 +1,10 @@
-from read_email import mail_connect
+from read_email import check_mail
 from dotenv import load_dotenv
 
 
 def main():
     load_dotenv()
-    mail_connect()
+    check_mail()
 
 
 if __name__ == '__main__':
