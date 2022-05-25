@@ -30,6 +30,7 @@ jobs:
 
       - name: Execute Python script # Run the app.py
         env:
+          IMAP: ${{ secrets.IMAP }}
           MAIL: ${{ secrets.MAIL }}
           PASS: ${{ secrets.PASS }}
           API_KEY: ${{ secrets.API_KEY }}
