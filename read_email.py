@@ -7,19 +7,20 @@ attempts = 0
 
 
 def check_mail():
+    posts = []
     with MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS')) as mailbox:
         if not mailbox.uids():
             trials()
         for msg in mailbox.fetch(AND(from_='newsletter@filipedeschamps.com.br')):
             mark_as_read(mailbox, msg.uid)
             archive_message(mailbox, msg.uid)
-            prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
+            posts = prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
+        twitter_connect(posts)
 
 
 def prepare_mail(msg):
     posts = msg.text.replace('*', '').split('\r\n\r\n')
-    posts = posts[2:-3]
-    twitter_connect(posts)
+    return posts[2:-3]
 
 
 def mark_as_read(mailbox, msg_uid):
