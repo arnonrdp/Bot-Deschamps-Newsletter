@@ -16,6 +16,8 @@ def check_mail():
             archive_message(mailbox, msg.uid)
             posts = prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
         twitter_connect(posts)
+        mailbox.close()
+        mailbox.logout()
 
 
 def prepare_mail(msg):
