@@ -15,18 +15,12 @@ jobs:
       name: production
 
     steps:
-      - name: Checkout repository content
-        uses: actions/checkout@v3 # Checkout the repository content to GitHub runner.
-
-      - name: Setup Python Version
-        uses: actions/setup-python@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.10.2
-
-      - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v3
-        with:
-          path: "requirements.txt"
+          python-version: '3.10.5'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
 
       - name: Execute Python script # Run the app.py
         env:
