@@ -1,32 +1,32 @@
 from os import getenv
 from time import sleep
-from imap_tools import AND, MailBox, MailMessageFlags
+from imap_tools import AND, MailBox
 from post_tweet import twitter_connect
 
 attempts = 0
 
 
-def check_mail():
+def mail_connect():
+    mailbox = MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS'), initial_folder='INBOX')
+    print('\nIMAP: conexão bem-sucedida!')
+    check_email(mailbox)
+
+
+def check_email(mailbox):
+    read_mail(mailbox) if mailbox.uids() else trials()
+
+
+def read_mail(mailbox):
     posts = []
-    with MailBox(getenv('IMAP')).login(getenv('MAIL'), getenv('PASS')) as mailbox:
-        if not mailbox.uids():
-            trials()
-        for msg in mailbox.fetch(AND(from_='newsletter@filipedeschamps.com.br')):
-            mark_as_read(mailbox, msg.uid)
-            archive_message(mailbox, msg.uid)
-            posts = prepare_mail(msg)  # TODO: utilizar 'msg.html' futuramente
-        twitter_connect(posts)
-        mailbox.logout()
+    for msg in mailbox.fetch(AND(from_='newsletter@filipedeschamps.com.br')):
+        posts = prepare_mail(msg)  # TODO: trabalhar com 'msg.html' futuramente
+        archive_message(mailbox, msg.uid)
+    twitter_connect(posts)
 
 
 def prepare_mail(msg):
     posts = msg.text.replace('*', '').split('\r\n\r\n')
     return posts[2:-3]
-
-
-def mark_as_read(mailbox, msg_uid):
-    mailbox.flag(msg_uid, MailMessageFlags.SEEN, True)
-    print('E-mail marcado como lido.')
 
 
 def archive_message(mailbox, msg_uid):
@@ -43,4 +43,4 @@ def trials():
         return
     print('Tentando novamente em 15 minutos...')
     sleep(900)
-    check_mail()
+    mail_connect()
