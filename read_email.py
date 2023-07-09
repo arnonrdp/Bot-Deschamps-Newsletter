@@ -26,7 +26,7 @@ def read_mail(mailbox):
 
 def prepare_mail(msg):
     posts = msg.text.replace('*', '').split('\r\n\r\n')
-    return posts[2:-3]
+    return posts[1:-3]
 
 
 def archive_message(mailbox, msg_uid):
