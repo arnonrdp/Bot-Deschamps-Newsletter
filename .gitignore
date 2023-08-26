@@ -9,3 +9,6 @@ __pycache__/
 
 # IDE
 .idea
+
+# Other
+.DS_Store
