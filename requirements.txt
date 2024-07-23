@@ -1,4 +1,5 @@
 imap-tools==1.7.0
 python-dotenv==1.0.1
 tweepy==4.14.0
-requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
+requests>=2.32.2 # not directly required, pinned by Snyk to avoid a vulnerability
+urllib3>=2.2.2 # not directly required, pinned by Snyk to avoid a vulnerability
